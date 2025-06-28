@@ -30,6 +30,10 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.get('/register', (req, res) => {
+    res.json({ message: "Register endpoint is working. Please use POST to register an user."});
+});
+
 // Login
 router.post('/login', async (req, res) => {
     const { email, passwords } = req.body;
@@ -52,5 +56,15 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
+
+router.get('/users', async (req, res) => {
+    try{
+        const [users] = await pool.query('SELECT * FROM users');
+        res.json(users);
+    }catch(err){
+        console.log('Error fetching users; ', err);
+        res.status(500).json({message: 'Server error', error: err.message});
+    }
+})
 
 module.exports = router;
