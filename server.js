@@ -9,17 +9,6 @@ pool.query('SELECT 1')
   .then(() => console.log('MySQL connection successful!'))
   .catch(err => console.error('MySQL connection failed:', err.message));
 
-// async function getUsers(id){
-//   const [rows] = await pool.query(`
-//     select * from users
-//     where id = ${id}
-//   `)
-//   return rows;
-// }
-
-// getUsers(1).then((users) => console.log(users));
-
-
 // Enable CORS for all origins (for development)
 app.use(cors());
 
@@ -30,11 +19,9 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
 
-// app.get('/users/:id', async (req, res) => {
-//   const id = req.params.id;
-//   const user = await getUsers(id);
-//   res.json(user);
-// })
+/// Product routes
+const productRoutes = require('./routes/product');
+app.use('/api/products', productRoutes);
 
 app.listen(port, () => {
   console.log(`Express server listening at http://localhost:${port}`);
